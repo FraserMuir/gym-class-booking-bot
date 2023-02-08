@@ -1,4 +1,4 @@
-name: gyn-automation
+name: gym-automation
 on:
   schedule:
     - cron: '1 0 * * 1,5'
