@@ -1,0 +1,14 @@
+name: gym-manual
+jobs:
+  run_automation:
+    name: Run automation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm i
+      - name: Install playwright browsers
+        run: npx playwright install-deps chromium
+      - name: Run tests
+        run: npx playwright test
