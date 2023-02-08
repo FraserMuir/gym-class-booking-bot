@@ -8,7 +8,7 @@ test("has title", async ({ page }) => {
   await page.locator("css=button[type='submit']").filter({ hasText: "Log In" }).click();
   await page.locator("css=a[href='/members-area/book/']").filter({ hasText: "Book a Class" }).click();
   await page.click("#day-tab-7");
-  await page.locator("css=.tab-pane.fade.active.show").locator("text=Zumba").click();
+  await page.locator("css=.tab-pane.fade.active.show").locator("text=Junior Gym Session").click();
   await page.locator("css=button[type='button']").filter({ hasText: "Book Now" }).click();
   await page.locator("Class Booked").waitFor();
 });
