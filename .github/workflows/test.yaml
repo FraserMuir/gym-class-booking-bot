@@ -1,7 +1,7 @@
 name: gym-automation
 on:
   schedule:
-    - cron: '1 0 * * 1,5'
+    - cron: "1 0 * * 1,5"
 jobs:
   run_automation:
     name: Run automation
@@ -9,9 +9,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').dependencies['@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
       - name: Install dependencies
-        run: npm i
-      - name: Install playwright browsers
-        run: npx playwright install-deps chromium
+        run: npm ci
+      - run: npx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - run: npx playwright install-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
       - name: Run tests
         run: npx playwright test
