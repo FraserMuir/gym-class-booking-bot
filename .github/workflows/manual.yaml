@@ -24,8 +24,6 @@ jobs:
         run: npm ci
       - run: npx playwright install --with-deps
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-      - run: npx playwright install-deps chromium
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
       - name: Run tests
         env:
           USERNAME: ${{ secrets.USERNAME }}
