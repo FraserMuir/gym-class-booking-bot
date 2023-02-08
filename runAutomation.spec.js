@@ -10,5 +10,5 @@ test("has title", async ({ page }) => {
   await page.click("#day-tab-7");
   await page.locator("css=.tab-pane.fade.active.show").locator("text=MetaPWR").click();
   await page.locator("css=button[type='button']").filter({ hasText: "Book Now" }).click();
-  await page.locator("Class Booked").waitFor();
+  await page.getByText("Class Booked").waitFor();
 });
